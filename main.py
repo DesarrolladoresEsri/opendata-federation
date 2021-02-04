@@ -5,13 +5,13 @@ logging.basicConfig(filename=f'./logs/log_{date.today().strftime("%Y_%m_%d")}.lo
 import os
 import re
 import json
+import time
 from datetime import date
 
 from private import *
 import requests
 from sodapy import Socrata
-client = Socrata("www.datos.gov.co", None,username=username, password=password)
-
+client = Socrata("www.datos.gov.co", TOKEN,username=username, password=password)
 
 
 #
@@ -189,10 +189,20 @@ if __name__ == "__main__":
         except:
             logging.error(f'Errors founded with {name_ent}')
             continue
-        for uid in uids[:2]:
-            print(uid)
-            # client.update_metadata(uid['id'], transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad']))
+        A=1
+        for uid in uids:
+            print(A)
+            A = A+1
+            try:
+                client.update_metadata(uid['id'], transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad']))
+            except:
+                try:
+                    time.sleep(3)
+                    client.update_metadata(uid['id'], transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad']))
+                except:
+                    logging.error(f'Cant unpdate for {uid}')
+                    continue
         else:
-            logging.info(f'Data for {name_ent}succesfully updated')
+            logging.info('Data for succesfully updated')
 
 

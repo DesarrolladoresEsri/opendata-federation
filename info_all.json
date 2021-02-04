@@ -1,0 +1,98 @@
+
+[
+    {"id":0,
+        "name":"guia",
+        "info":
+           {"portal_url":"url del portal",
+            "default_category":"",
+            "Información de la Entidad":{
+                   "Municipio": "",
+                   "Nombre de la Entidad": "",
+                   "Orden": "",
+                   "Sector": "",
+                   "Área o dependencia": "",
+                   "Departamento": ""
+                   }  ,
+            "Información de Datos" : {
+                    "Cobertura Geográfica": "",
+                    "Idioma": "",
+                    "Frecuencia de Actualización": "",
+                    "URL Documentación": "",
+                    "Fecha Emisión (aaaa-mm-dd)": "",
+                    "URL Normativa": ""
+                    } 
+           }
+       },
+    {"id":1,
+     "name":"CAR",
+     "info":
+        {"portal_url":"https://datosgeograficos.car.gov.co/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Corporación Autónoma Regional de Cundinamarca",
+                "Departamento": "Cundinamarca"
+                } 
+        }
+    },
+    {"id":2,
+     "name":"ANLA",
+     "info":
+        {"portal_url":"https://datosabiertos-anla.hub.arcgis.com/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Autoridad Nacional de Licencias Ambientales"
+                } 
+        }
+    },
+    {"id":3,
+     "name":"Gobernacion Cundinamarca",
+     "info":
+        {"portal_url":"https://mapasyestadisticas-cundinamarca-map.opendata.arcgis.com/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Gobernación de Cundinamarca"
+                } 
+        }
+    },
+    {"id":4,
+     "name":"SGC",
+     "info":
+        {"portal_url":"http://datos-sgcolombiano.opendata.arcgis.com/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Servicio Geológico Colombiano"
+                } 
+        }
+    },
+    {"id":5,
+     "name":"SINCHI",
+     "info":
+        {"portal_url":"https://datos.siatac.co/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Instituto Amazónico de Investigaciones Científicas"
+                } 
+        }
+    },
+    {"id":6,
+     "name":"Gobernacion Caldas",
+     "info":
+        {"portal_url":"https://sigplaneacion-gobercaldas.opendata.arcgis.com/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Gobernación de Caldas"
+                } 
+        }
+    },
+    {"id":7,
+     "name":"Unidad Restitucion de Tierras",
+     "info":
+        {"portal_url":"https://urtdatosabiertos-uaegrtd.opendata.arcgis.com/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Unidad de Restitución de Tierras"
+                } 
+        }
+    }
+
+]
