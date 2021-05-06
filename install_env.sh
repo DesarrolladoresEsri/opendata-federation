@@ -1,0 +1,1 @@
+conda create -n fed_soc_ags -y pip && conda activate fed_soc_ags && pip install -r requirements.txt
