@@ -181,12 +181,8 @@ def transform_metadata(uid, category , entity_info= {}):
     }
     return data
 
-
-
-if __name__ == "__main__":
-    begin_time = datetime.datetime.now()
-    
-    # print(os.listdir())
+def run ():
+        # print(os.listdir())
     
     with open('info.json', encoding="utf8") as f:
         info = json.load(f)
@@ -198,7 +194,7 @@ if __name__ == "__main__":
         try:
             uids = prepare_data(ent)
         except:
-            print('error in ')
+            #print('error in ')
             logging.error(f'Errors founded with {name_ent}')
             continue
         success = 0
@@ -208,26 +204,33 @@ if __name__ == "__main__":
             
             try:
                 transformed_metadata = transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad'])
-                logging.info(f'data prepared for {uid}')
+                logging.info(f'\t\tData prepared for {uid}')
                 client.update_metadata(uid['id'], transformed_metadata)
-                logging.info(f'data updated for {uid}')
+                logging.info(f'\t\tData updated for {uid}')
                 success = success+1
             except:
                 try:
                     time.sleep(4)
                     transformed_metadata = transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad'])
-                    logging.info(f'data prepared for {uid}')
+                    logging.info(f'\t\tData prepared for {uid}')
                     client.update_metadata(uid['id'], transformed_metadata)
-                    logging.info(f'data updated for {uid}')
+                    logging.info(f'\t\tData updated for {uid}')
                     success = success+1
                 except Exception as e:
-                    logging.error(f'Cant update for {uid}, not founded in datos.gov.co publicly')
+                    logging.error(f'\t\tCant update for {uid}, not founded public in datos.gov.co')
                     failed = failed +1
                     continue
         else:
-            logging.info(f'{success} registers for {name_ent} succesfully updated with errors in {failed} registers')
+            logging.info(f'\t{success} registers for {name_ent} succesfully updated with errors in {failed} registers')
             total_registers = total_registers + success +failed
     
+    
+
+if __name__ == "__main__":
+    begin_time = datetime.datetime.now()
+    
+    run()
+
     time_final = datetime.datetime.now() - begin_time
     logging.info(f'The script takes {time_final} to run a total of {total_registers} registers')
 
