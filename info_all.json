@@ -93,6 +93,18 @@
                 "Nombre de la Entidad": "Unidad de Restitución de Tierras"
                 } 
         }
+    },
+	{"id":8,
+     "name":"Gobernación de Antioquia",
+     "info":
+        {"portal_url":"https://geodatos-gobantioquia.opendata.arcgis.com/",
+         "default_category":"Ambiente y Desarrollo Sostenible",   
+         "Información de la Entidad":{
+                "Nombre de la Entidad": "Gobernación de Antioquia",
+				"Departamento": "Antioquia"
+                } 
+        }
     }
+	
 
 ]

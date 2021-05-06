@@ -1,6 +1,6 @@
 import logging
-from datetime import date
-logging.basicConfig(filename=f'./logs/log_{date.today().strftime("%Y_%m_%d")}.log', encoding='utf-8', level=logging.INFO)
+import datetime
+logging.basicConfig(filename=f'./logs/log_{datetime.date.today().strftime("%d_%m_%Y")}.log', level=logging.INFO)
 
 import os
 import re
@@ -93,6 +93,7 @@ def prepare_data(i):
             new_file = [i for i in datasets_id if i['url'] in comun_ids]
             # new_file = {k:v for k,v in datasets_id.items() if k in comun_ids}
             added_ids_data = [i for i in datasets if i['url'] in added_ids]
+            
             for _id in added_ids_data:
                 data_reg = {}
                 try:
@@ -139,7 +140,15 @@ def prepare_data(i):
 and add the info of the organization and the info to a dict to upgrade in the metadata '''
 
 def transform_metadata(uid, category , entity_info= {}):
-    dict_metadata = requests.get(f'https://www.datos.gov.co/api/views/{uid}.json',auth=(username, password)).json()['metadata']
+    
+    try:
+        metadata_request = requests.get(f'https://www.datos.gov.co/api/views/{uid}.json',auth=(username, password)).json()
+        dict_metadata = metadata_request['metadata']
+    except Exception as e:
+        uid_id = uid['id']
+        logging.error(f'Cant find {uid_id} in datos.gov')
+        
+        
     # dict_metadata = client.get_metadata(uid)['metadata']
     # Municipio = 
     # Nombre_de_la_Entidad = 
@@ -175,34 +184,51 @@ def transform_metadata(uid, category , entity_info= {}):
 
 
 if __name__ == "__main__":
-
+    begin_time = datetime.datetime.now()
+    
     # print(os.listdir())
     
     with open('info.json', encoding="utf8") as f:
         info = json.load(f)
         info = info[1:]
-
+    
+    total_registers = 0
     for ent in info:
         name_ent = ent['name']
         try:
             uids = prepare_data(ent)
         except:
+            print('error in ')
             logging.error(f'Errors founded with {name_ent}')
             continue
-        A=1
+        success = 0
+        failed = 0
         for uid in uids:
-            print(A)
-            A = A+1
+            #print(A)
+            
             try:
-                client.update_metadata(uid['id'], transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad']))
+                transformed_metadata = transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad'])
+                logging.info(f'data prepared for {uid}')
+                client.update_metadata(uid['id'], transformed_metadata)
+                logging.info(f'data updated for {uid}')
+                success = success+1
             except:
                 try:
-                    time.sleep(3)
-                    client.update_metadata(uid['id'], transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad']))
-                except:
-                    logging.error(f'Cant unpdate for {uid}')
+                    time.sleep(4)
+                    transformed_metadata = transform_metadata(uid['id'],category= uid['category'],entity_info = ent['info']['Información de la Entidad'])
+                    logging.info(f'data prepared for {uid}')
+                    client.update_metadata(uid['id'], transformed_metadata)
+                    logging.info(f'data updated for {uid}')
+                    success = success+1
+                except Exception as e:
+                    logging.error(f'Cant update for {uid}, not founded in datos.gov.co publicly')
+                    failed = failed +1
                     continue
         else:
-            logging.info('Data for succesfully updated')
+            logging.info(f'{success} registers for {name_ent} succesfully updated with errors in {failed} registers')
+            total_registers = total_registers + success +failed
+    
+    time_final = datetime.datetime.now() - begin_time
+    logging.info(f'The script takes {time_final} to run a total of {total_registers} registers')
 
 
