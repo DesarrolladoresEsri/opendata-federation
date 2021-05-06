@@ -223,13 +223,14 @@ def run ():
         else:
             logging.info(f'\t{success} registers for {name_ent} succesfully updated with errors in {failed} registers')
             total_registers = total_registers + success +failed
+    return total_registers
     
     
 
 if __name__ == "__main__":
     begin_time = datetime.datetime.now()
     
-    run()
+    total_registers = run()
 
     time_final = datetime.datetime.now() - begin_time
     logging.info(f'The script takes {time_final} to run a total of {total_registers} registers')
